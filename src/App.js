@@ -10,7 +10,7 @@ export default function App() {
     getLatestBlock();
   },[]);
 
-  function getLatestBlock(){
+ async function getLatestBlock(){
 console.log("Getting latest block");
 const requestOptions = {
   method: 'POST',
@@ -24,8 +24,9 @@ fetch('https://ethblockchain.mohammedismayi1.repl.co/', requestOptions)
    
     console.log(data["result"]["number"]),
    
-    
-    );
+    // fe = await getLastFewBlocks(),
+    getLastFewBlocks().then(response => console.log(response))
+  );
 
   
 
@@ -33,6 +34,44 @@ fetch('https://ethblockchain.mohammedismayi1.repl.co/', requestOptions)
   const products = ["brush","keys","rings","watches"]
   setBlocks(products);
   };
+
+
+  async function getLastFewBlocks(){
+
+
+    for (let index = 0; index < staticBlockCount; index++) {
+      // const element = array[index];
+
+      const blockData = await getBlockUsingNumber("0x1");
+
+      console.log(blockData);
+      console.log("get block using number");
+
+
+      
+    }
+  }
+
+  async function getBlockUsingNumber(number) {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({"jsonrpc":"2.0","method":"eth_getBlockByNumber","params":["0x1", false],"id":1})
+    };
+    fetch('https://ethblockchain.mohammedismayi1.repl.co/', requestOptions)
+      .then(response => 
+        console.log(response.json())
+        // response.json()
+      
+      
+      
+      
+      )
+      
+        
+        
+    
+  }
 
 
 
