@@ -98,7 +98,7 @@ export default function App() {
     const blockNumber = parseInt(props.blockNumber, 16);
     return (
       <li>
-        <Link to="/block">Block</Link>
+        <Link to="/block/3">Block</Link>
         <div>
           {blockNumber}-{value}
         </div>

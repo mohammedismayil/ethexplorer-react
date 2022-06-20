@@ -11,7 +11,7 @@ root.render(
   <React.StrictMode>
     <Router>
       <Routes>
-        <Route exact path="/block" element={<Block />}></Route>
+        <Route exact path="/block/:blockNumber" element={<Block />}></Route>
         <Route exact path="/tx" element={<TX />}></Route>
         <Route path="/" element={<App />}></Route>
       </Routes>
