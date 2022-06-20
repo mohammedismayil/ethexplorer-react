@@ -1,5 +1,8 @@
 // import React from 'react'
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Block from "./Block";
+import TX from "./TX";
 export default function App() {
   var [blocks, setBlocks] = useState([]);
   let staticBlockCount = 5;
@@ -95,6 +98,7 @@ export default function App() {
     const blockNumber = parseInt(props.blockNumber, 16);
     return (
       <li>
+        <Link to="/block">Block</Link>
         <div>
           {blockNumber}-{value}
         </div>
