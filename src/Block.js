@@ -30,7 +30,7 @@ export default function Block() {
       .then((returnedJSON) => {
         console.log(returnedJSON);
 
-        blockData = returnedJSON;
+        // blockData = returnedJSON;
         setBlock(returnedJSON); // console.log("from blocks arr", blockData["result"]["hash"]);
       });
 
@@ -52,17 +52,33 @@ export default function Block() {
   function convertToWei(hexString) {
     return parseInt(hexString, 16);
   }
+
+  function ListItem(props) {
+    return (
+      <div>
+        <div>Block Height: {block["result"]["number"]}</div>
+
+        <div>Gas Used: {convertToWei(block["result"]["gasUsed"])}</div>
+        <div>Gas Limit: {convertToWei(block["result"]["gasLimit"])}</div>
+        <div>Burnt Fees: {convertToWei(block["result"]["baseFeePerGas"])}</div>
+
+        <div>Transactions: {block["result"]["transactions"][0]}</div>
+      </div>
+    );
+  }
+
+  const listItems =
+    block["result"] != null ? <ListItem></ListItem> : <div></div>;
+
   return (
     <div>
       Block
       {/* <div>Block Height: {getDateFromTimeStamp()}</div> */}
-      <div>Block Height: {block["result"]["number"]}</div>
-      <div>
-        Timestamp : {getDateFromTimeStamp(block["result"]["timestamp"])}
-      </div>
-      <div>Gas Used: {convertToWei(block["result"]["gasUsed"])}</div>
-      <div>Gas Limit: {convertToWei(block["result"]["gasLimit"])}</div>
-      <div>Burnt Fees: {convertToWei(block["result"]["baseFeePerGas"])}</div>
+      {/* <div>Block Height: {block["result"]["number"]}</div> */}
+      <div>{listItems}</div>
     </div>
   );
 }
+
+
+

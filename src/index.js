@@ -12,7 +12,7 @@ root.render(
     <Router>
       <Routes>
         <Route exact path="/block/:blockNumber" element={<Block />}></Route>
-        <Route exact path="/tx" element={<TX />}></Route>
+        <Route exact path="/tx/:txID" element={<TX />}></Route>
         <Route path="/" element={<App />}></Route>
       </Routes>
     </Router>
