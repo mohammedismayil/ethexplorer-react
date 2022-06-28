@@ -1,10 +1,19 @@
 // import React from 'react'
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate,
+} from "react-router-dom";
 import Block from "./Block";
 import TX from "./TX";
 export default function App() {
+  const navigate = useNavigate();
   var [blocks, setBlocks] = useState([]);
+  var [searchText, setsearchText] = useState("");
+
   let staticBlockCount = 5;
   useEffect(() => {
     // Update the document title using the browser API
@@ -93,6 +102,19 @@ export default function App() {
     }
   }
 
+  function searchGivenElement() {
+    console.log("On click search button");
+    console.log(searchText);
+
+    if (validateInputAddresses(searchText)) {
+      navigate("/address/3");
+    } else {
+      console.log("not a valid address");
+    }
+  }
+  function validateInputAddresses(address) {
+    return /^(0x){1}[0-9a-fA-F]{40}$/i.test(address);
+  }
   function ListItem(props) {
     const value = props.value;
     const blockNumber = parseInt(props.blockNumber, 16);
@@ -122,6 +144,15 @@ export default function App() {
     // console.log("Rendering the APP"),
     <div>
       <div>ETH Explorer</div>
+
+      <input
+        value={searchText}
+        type="text"
+        onChange={(event) => setsearchText(event.target.value)}
+        placeholder="Search for names.."
+      ></input>
+      <button onClick={() => searchGivenElement()}>Search</button>
+
       <div>
         <ul>{listItems}</ul>
       </div>

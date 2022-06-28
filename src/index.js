@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Block from "./Block";
 import TX from "./TX";
+import Address from "./Address";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
@@ -13,6 +14,7 @@ root.render(
       <Routes>
         <Route exact path="/block/:blockNumber" element={<Block />}></Route>
         <Route exact path="/tx/:txID" element={<TX />}></Route>
+        <Route exact path="/address/:address" element={<Address />}></Route>
         <Route path="/" element={<App />}></Route>
       </Routes>
     </Router>
