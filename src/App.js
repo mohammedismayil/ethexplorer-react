@@ -7,8 +7,9 @@ import {
   Link,
   useNavigate,
 } from "react-router-dom";
-import Block from "./Block";
-import TX from "./TX";
+import Block from "./Pages/Block";
+import SearchBar from "./Components/SearchBar";
+import TX from "./Pages/TX";
 export default function App() {
   const navigate = useNavigate();
   var [blocks, setBlocks] = useState([]);
@@ -102,7 +103,7 @@ export default function App() {
     }
   }
 
-  function searchGivenElement() {
+  function searchGivenElement(searchText) {
     console.log("On click search button");
     console.log(searchText);
 
@@ -120,7 +121,7 @@ export default function App() {
     const blockNumber = parseInt(props.blockNumber, 16);
     return (
       <li>
-        <Link to="/block/3">Block</Link>
+        <Link to={"/block/" + blockNumber.toString()}>Block</Link>
         <div>
           {blockNumber}-{value}
         </div>
@@ -143,17 +144,17 @@ export default function App() {
   return (
     // console.log("Rendering the APP"),
     <div>
-      <div>ETH Explorer</div>
-
-      <input
+      <div className="text-center py-5">ETH Explorer</div>
+      <SearchBar searchButtonTap={searchGivenElement}></SearchBar>
+      {/* <input
         value={searchText}
         type="text"
         onChange={(event) => setsearchText(event.target.value)}
         placeholder="Search for names.."
       ></input>
-      <button onClick={() => searchGivenElement()}>Search</button>
+      <button onClick={() => searchGivenElement()}>Search</button> */}
 
-      <div>
+      <div className="flex align-center justify-center">
         <ul>{listItems}</ul>
       </div>
     </div>
