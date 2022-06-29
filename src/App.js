@@ -157,6 +157,7 @@ export default function App() {
       <div className="flex align-center justify-center">
         <ul>{listItems}</ul>
       </div>
+      <div>Footer</div>
     </div>
   );
 }
