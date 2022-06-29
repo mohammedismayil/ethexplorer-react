@@ -15,9 +15,7 @@ jobs:
     - uses: actions/checkout@v2
     - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
    
-    - name: Login to Docker Hub
-      run: docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
-    - name: Build the stack
+    - name: Login to Docker Hub and push the build
       run: |
         docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
         docker build . --file Dockerfile -t ismayil10/ethexplorer-react
@@ -39,6 +37,8 @@ jobs:
             IdentityFile ~/.ssh/staging.key
             StrictHostKeyChecking no
           END
-    - name: Starting the Docker compose
+    - name: Run the app using docker
       run: |
-         ssh staging 'docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"'
+         ssh staging 'sudo docker pull ismayil10/ethexplorer-react'
+         ssh staging 'sudo docker stop explorer'
+         ssh staging 'sudo docker run --name explorer -it -d -p 3000:3000 ismayil10/ethexplorer-react'
