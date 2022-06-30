@@ -39,6 +39,7 @@ jobs:
           END
     - name: Run the app using docker
       run: |
+         ssh staging 'docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"'
          ssh staging 'sudo docker pull ismayil10/ethexplorer-react'
          ssh staging 'sudo docker stop explorer'
          ssh staging 'sudo docker run --name explorer -it -d -p 3000:3000 ismayil10/ethexplorer-react'
