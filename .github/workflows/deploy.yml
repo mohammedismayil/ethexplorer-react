@@ -44,7 +44,7 @@ jobs:
             USER_NAME : ${{ secrets.SSH_USER  }}
       run: |
          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-         ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+         ssh -o StrictHostKeyChecking=no -i private_key "${USER_NAME}@${HOSTNAME}""
          docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
          sudo docker pull ismayil10/ethexplorer-react
          sudo docker stop explorer
