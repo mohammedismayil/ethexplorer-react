@@ -20,23 +20,6 @@ jobs:
         docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
         docker build . --file Dockerfile -t ismayil10/ethexplorer-react
         docker push ismayil10/ethexplorer-react
-
-    - name: Configure SSH
-      run: |
-          git config --global user.email "mohammedismayil10@gmail.com"
-          git config --global user.name "mohammedismayil"
-          eval $(ssh-agent -s)
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' | ssh-add -
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/staging.key
-          chmod 600 ~/.ssh/staging.key
-          cat >>~/.ssh/config <<END
-          Host staging
-            HostName "${{ secrets.SSH_HOST }}"
-            User "${{ secrets.SSH_USER }}"
-            IdentityFile ~/.ssh/staging.key
-            StrictHostKeyChecking no
-          END
     - name: Run the app using docker
       env:
             PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY  }}
@@ -44,8 +27,9 @@ jobs:
             USER_NAME : ${{ secrets.SSH_USER  }}
       run: |
          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-         ssh -o StrictHostKeyChecking=no -i private_key "${USER_NAME}@${HOSTNAME}"
-         docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
-         sudo docker pull ismayil10/ethexplorer-react
-         sudo docker stop explorer
-         docker run --name explorer -it -d -p 3000:3000 ismayil10/ethexplorer-react
+         ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+           docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
+           sudo docker pull ismayil10/ethexplorer-react
+           sudo docker stop explorer
+           docker run --name explorer -it -d -p 3000:3000 ismayil10/ethexplorer-react
+         '
