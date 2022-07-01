@@ -14,23 +14,33 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-   
-    - name: Login to Docker Hub and push the build
-      run: |
-        docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
-        docker build . --file Dockerfile -t ismayil10/ethexplorer-react
-        docker push ismayil10/ethexplorer-react
-    - name: Run the app using docker
-      env:
-            PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY  }}
-            HOSTNAME : ${{ secrets.SSH_HOST  }}
-            USER_NAME : ${{ secrets.SSH_USER  }}
-      run: |
-         echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
 
-         sudo ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-           sudo docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
-           sudo docker pull ismayil10/ethexplorer-react
-           sudo docker stop explorer
-           sudo docker run --name explorer -it -d -p 3000:3000 ismayil10/ethexplorer-react
-         '
+    # - name: Login to Docker Hub and push the build
+    #   run: |
+    #     docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
+    #     docker build . --file Dockerfile -t ismayil10/ethexplorer-react
+    #     docker push ismayil10/ethexplorer-react
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: 22
+        script: |
+          whoami
+          docker pull ismayil10/ethexplorer-react
+    # - name: Run the app using docker
+    #   env:
+    #         PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY  }}
+    #         HOSTNAME : ${{ secrets.SSH_HOST  }}
+    #         USER_NAME : ${{ secrets.SSH_USER  }}
+    #   run: |
+    #      echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
+
+    #      sudo ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+    #        sudo docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
+    #        sudo docker pull ismayil10/ethexplorer-react
+    #        sudo docker stop explorer
+    #        sudo docker run --name explorer -it -d -p 3000:3000 ismayil10/ethexplorer-react
+        #  '

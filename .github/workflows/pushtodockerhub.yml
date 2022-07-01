@@ -1,21 +1,21 @@
 
 
-name: Node.js CI
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+# name: Node.js CI
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
 
-jobs:
-  build:
+# jobs:
+#   build:
 
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-    - name: Login to Docker Hub and push the build
-      run: |
-        docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
-        docker build . --file Dockerfile -t ismayil10/ethexplorer-react
-        docker push ismayil10/ethexplorer-react
+#     runs-on: ubuntu-latest
+#     steps:
+#     - uses: actions/checkout@v2
+#     - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+#     - name: Login to Docker Hub and push the build
+#       run: |
+#         docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
+#         docker build . --file Dockerfile -t ismayil10/ethexplorer-react
+#         docker push ismayil10/ethexplorer-react
