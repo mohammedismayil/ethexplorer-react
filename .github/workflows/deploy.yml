@@ -20,14 +20,17 @@ jobs:
     #     docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
     #     docker build . --file Dockerfile -t ismayil10/ethexplorer-react
     #     docker push ismayil10/ethexplorer-react
-    - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
+
+    - name: ls -a via ssh
+      uses: fifsky/ssh-action@master
       with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: whoami
-  
+       command: |
+         cd /tmp
+         ls -a
+         sudo docker pull ismayil10/ethexplorer-react
+       host: ${{ secrets.SSH_HOST }}
+       user: ubuntu
+       key: ${{ secrets.SSH_PRIVATE_KEY}}
     # - name: Run the app using docker
     #   env:
     #         PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY  }}
