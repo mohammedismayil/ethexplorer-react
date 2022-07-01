@@ -25,11 +25,14 @@ jobs:
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USER }}
+        password: ${{ secrets.SSH_PASSWORD }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22
         script: |
           whoami
-          docker pull ismayil10/ethexplorer-react
+          sudo docker pull ismayil10/ethexplorer-react
+          sudo docker stop explorer
+          sudo docker restart explorer
     # - name: Run the app using docker
     #   env:
     #         PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY  }}
