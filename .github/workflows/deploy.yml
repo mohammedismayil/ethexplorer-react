@@ -28,8 +28,8 @@ jobs:
          cd /tmp
          ls -a
          sudo docker pull ismayil10/ethexplorer-react
-         sudo docker stop explorer
-         sudo docker restart explorer
+         sudo docker stop explorer || true && sudo docker rm explorer || true
+         sudo docker run --name explorer -it -d -p 3000:3000 ismayil10/ethexplorer-react
        host: ${{ secrets.SSH_HOST }}
        user: ubuntu
        key: ${{ secrets.SSH_PRIVATE_KEY}}
