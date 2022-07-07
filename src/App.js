@@ -10,6 +10,7 @@ import {
 import Block from "./Pages/Block";
 import SearchBar from "./Components/SearchBar";
 import TX from "./Pages/TX";
+import { TimeHelper } from "./TimeHelper";
 export default function App() {
   const navigate = useNavigate();
   var [blocks, setBlocks] = useState([]);
@@ -121,12 +122,18 @@ export default function App() {
     const blockNumber = parseInt(props.blockNumber, 16);
     return (
       <li>
-        <Link to={"/block/" + blockNumber.toString()}>Block</Link>
-        <div>
-          {blockNumber}-{value}
-        </div>
+        <Link to={"/block/" + blockNumber.toString()}>Block-{blockNumber}</Link>
+
+        <div>{props.time}</div>
+        <div>{value}</div>
       </li>
     );
+  }
+  function getTime(hexString) {
+    var current = new Date();
+    var int = parseInt(hexString, 16);
+
+    return TimeHelper.timeDifference(current, new Date(int * 1000)).toString();
   }
   const listItems =
     blocks.length > 0 ? (
@@ -135,6 +142,7 @@ export default function App() {
         <ListItem
           key={number["result"]["hash"]}
           value={number["result"]["miner"]}
+          time={getTime(number["result"]["timestamp"])}
           blockNumber={number["result"]["number"]}
         />
       ))
@@ -153,11 +161,12 @@ export default function App() {
         placeholder="Search for names.."
       ></input>
       <button onClick={() => searchGivenElement()}>Search</button> */}
+      <div className="flex align-center justify-center">Latest Blocks</div>
 
       <div className="flex align-center justify-center">
         <ul>{listItems}</ul>
       </div>
-      <div className="flex align-center justify-center">Footer is Here now</div>
+      {/* <div className="flex align-center justify-center">Footer is Here now</div> */}
     </div>
   );
 }
