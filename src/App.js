@@ -109,13 +109,19 @@ export default function App() {
     console.log(searchText);
 
     if (validateInputAddresses(searchText)) {
-      navigate("/address/3");
-    } else {
-      console.log("not a valid address");
+      navigate("/address/" + searchText);
+    } else if (isValidTXHash(searchText)) {
+      navigate("/tx/" + searchText);
+    }else{
+      console.log("not a valid address or hash");
     }
   }
   function validateInputAddresses(address) {
     return /^(0x){1}[0-9a-fA-F]{40}$/i.test(address);
+  }
+
+  function isValidTXHash(hash) {
+    return /^0x([A-Fa-f0-9]{64})$/.test(hash);
   }
   function ListItem(props) {
     const value = props.value;
