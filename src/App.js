@@ -11,6 +11,7 @@ import Block from "./Pages/Block";
 import SearchBar from "./Components/SearchBar";
 import TX from "./Pages/TX";
 import { TimeHelper } from "./TimeHelper";
+import Footer from "./Components/Footer";
 export default function App() {
   const navigate = useNavigate();
   var [blocks, setBlocks] = useState([]);
@@ -172,6 +173,8 @@ export default function App() {
       <div className="flex align-center justify-center">
         <ul>{listItems}</ul>
       </div>
+
+      <Footer />
       {/* <div className="flex align-center justify-center">Footer is Here now</div> */}
     </div>
   );
