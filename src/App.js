@@ -162,13 +162,6 @@ export default function App() {
     <div>
       <div className="text-center py-5">ETH Explorer</div>
       <SearchBar searchButtonTap={searchGivenElement}></SearchBar>
-      {/* <input
-        value={searchText}
-        type="text"
-        onChange={(event) => setsearchText(event.target.value)}
-        placeholder="Search for names.."
-      ></input>
-      <button onClick={() => searchGivenElement()}>Search</button> */}
       <div className="flex align-center justify-center">Latest Blocks</div>
 
       <div className="flex align-center justify-center">
