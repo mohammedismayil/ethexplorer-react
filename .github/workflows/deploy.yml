@@ -1,49 +1,49 @@
 
 
-name: Node.js CI
-on:
-  push:
-    branches: [ _main ]
-  pull_request:
-    branches: [ _main ]
+# name: Node.js CI
+# on:
+#   push:
+#     branches: [ _main ]
+#   pull_request:
+#     branches: [ _main ]
 
-jobs:
-  build:
+# jobs:
+#   build:
 
-    runs-on: ubuntu-18.04
-    steps:
-    - uses: actions/checkout@v2
-    - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+#     runs-on: ubuntu-18.04
+#     steps:
+#     - uses: actions/checkout@v2
+#     - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
 
-    - name: Login to Docker Hub and push the build
-      run: |
-        docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
-        docker build . --file Dockerfile -t ismayil10/ethexplorer-react
-        docker push ismayil10/ethexplorer-react
+#     - name: Login to Docker Hub and push the build
+#       run: |
+#         docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
+#         docker build . --file Dockerfile -t ismayil10/ethexplorer-react
+#         docker push ismayil10/ethexplorer-react
 
-    - name: ls -a via ssh
-      uses: fifsky/ssh-action@master
-      with:
-       command: |
-         cd /tmp
-         ls -a
-         sudo docker pull ismayil10/ethexplorer-react
-         sudo docker stop explorer || true && sudo docker rm explorer || true
-         sudo docker run --name explorer -it -d -p 3000:3000 ismayil10/ethexplorer-react
-       host: ${{ secrets.SSH_HOST }}
-       user: ubuntu
-       key: ${{ secrets.SSH_PRIVATE_KEY}}
-    # - name: Run the app using docker
-    #   env:
-    #         PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY  }}
-    #         HOSTNAME : ${{ secrets.SSH_HOST  }}
-    #         USER_NAME : ${{ secrets.SSH_USER  }}
-    #   run: |
-    #      echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
+#     - name: ls -a via ssh
+#       uses: fifsky/ssh-action@master
+#       with:
+#        command: |
+#          cd /tmp
+#          ls -a
+#          sudo docker pull ismayil10/ethexplorer-react
+#          sudo docker stop explorer || true && sudo docker rm explorer || true
+#          sudo docker run --name explorer -it -d -p 3000:3000 ismayil10/ethexplorer-react
+#        host: ${{ secrets.SSH_HOST }}
+#        user: ubuntu
+#        key: ${{ secrets.SSH_PRIVATE_KEY}}
+#     # - name: Run the app using docker
+#     #   env:
+#     #         PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY  }}
+#     #         HOSTNAME : ${{ secrets.SSH_HOST  }}
+#     #         USER_NAME : ${{ secrets.SSH_USER  }}
+#     #   run: |
+#     #      echo "$PRIVATE_KEY" > private_key && chmod 400 private_key
 
-    #      sudo ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-    #        sudo docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
-    #        sudo docker pull ismayil10/ethexplorer-react
-    #        sudo docker stop explorer
-    #        sudo docker run --name explorer -it -d -p 3000:3000 ismayil10/ethexplorer-react
-        #  '
+#     #      sudo ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+#     #        sudo docker login --username "${{ secrets.Docker_username }}" --password "${{ secrets.Docker_password }}"
+#     #        sudo docker pull ismayil10/ethexplorer-react
+#     #        sudo docker stop explorer
+#     #        sudo docker run --name explorer -it -d -p 3000:3000 ismayil10/ethexplorer-react
+#         #  '
