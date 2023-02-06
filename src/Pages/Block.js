@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, Link, Routes, useParams } from "react-router-dom";
+import { AppConfiguration } from "../Constants";
 export default function Block() {
   var [block, setBlock] = useState([]);
   const params = useParams();
@@ -25,7 +26,7 @@ export default function Block() {
       }),
     };
 
-    await fetch("https://ismayilethtestnet.tk/", requestOptions)
+    await fetch(AppConfiguration.networkURL, requestOptions)
       .then((response) => response.json())
       .then((returnedJSON) => {
         console.log(returnedJSON);

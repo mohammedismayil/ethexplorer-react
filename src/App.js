@@ -12,6 +12,7 @@ import SearchBar from "./Components/SearchBar";
 import TX from "./Pages/TX";
 import { TimeHelper } from "./TimeHelper";
 import Footer from "./Components/Footer";
+import { AppConfiguration } from "./Constants";
 export default function App() {
   const navigate = useNavigate();
   var [blocks, setBlocks] = useState([]);
@@ -25,7 +26,7 @@ export default function App() {
   }, []);
 
   async function getLatestBlock() {
-    // console.log("Getting latest block");
+    console.log(`Getting latest block from ${AppConfiguration.networkURL}`);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -36,7 +37,7 @@ export default function App() {
         id: 1,
       }),
     };
-    fetch("https://ismayilethtestnet.tk/", requestOptions)
+    fetch(AppConfiguration.networkURL, requestOptions)
       .then((response) => response.json())
       .then((data) =>
         // fe = await getLastFewBlocks(),
@@ -91,7 +92,7 @@ export default function App() {
       }),
     };
 
-    await fetch("https://ismayilethtestnet.tk/", requestOptions)
+    await fetch(AppConfiguration().networkURL, requestOptions)
       .then((response) => response.json())
       .then((returnedJSON) => {
         // console.log(returnedJSON);
@@ -113,7 +114,7 @@ export default function App() {
       navigate("/address/" + searchText);
     } else if (isValidTXHash(searchText)) {
       navigate("/tx/" + searchText);
-    }else{
+    } else {
       console.log("not a valid address or hash");
     }
   }

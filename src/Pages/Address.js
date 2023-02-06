@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, Link, Routes, useParams } from "react-router-dom";
+import { AppConfiguration } from "../Constants";
+
 export default function Address() {
   var [balance, setBalance] = useState("");
   const params = useParams();
@@ -19,7 +21,7 @@ export default function Address() {
       }),
     };
 
-    await fetch("https://ismayilethtestnet.tk/", requestOptions)
+    await fetch(AppConfiguration.networkURL, requestOptions)
       .then((response) => response.json())
       .then((returnedJSON) => {
         // console.log(parseInt(returnedJSON["result"], 16) / 10 ** 18);
