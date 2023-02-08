@@ -92,7 +92,7 @@ export default function App() {
       }),
     };
 
-    await fetch(AppConfiguration().networkURL, requestOptions)
+    await fetch(AppConfiguration.networkURL, requestOptions)
       .then((response) => response.json())
       .then((returnedJSON) => {
         // console.log(returnedJSON);

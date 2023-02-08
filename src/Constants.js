@@ -1,3 +1,3 @@
 export class AppConfiguration {
-  static networkURL = "https://ismayilethtestnet.tk/";
+  static networkURL = "https://ethblockchain.mohammedismayi1.repl.co/";
 }
