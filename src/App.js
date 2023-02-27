@@ -13,6 +13,7 @@ import TX from "./Pages/TX";
 import { TimeHelper } from "./TimeHelper";
 import Footer from "./Components/Footer";
 import { AppConfiguration } from "./Constants";
+import { APIHandler } from "./APIHandler";
 export default function App() {
   const navigate = useNavigate();
   var [blocks, setBlocks] = useState([]);
@@ -27,6 +28,7 @@ export default function App() {
 
   async function getLatestBlock() {
     console.log(`Getting latest block from ${AppConfiguration.networkURL}`);
+
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -37,15 +39,8 @@ export default function App() {
         id: 1,
       }),
     };
-    fetch(AppConfiguration.networkURL, requestOptions)
-      .then((response) => response.json())
-      .then((data) =>
-        // fe = await getLastFewBlocks(),
-        getLastFewBlocks(data["result"]["number"])
-      );
-
-    // const products = ["brush","keys","rings","watches"]
-    // setBlocks(products);
+    const json = await APIHandler.fetchData(requestOptions);
+    await getLastFewBlocks(json["result"]["number"]);
   }
 
   async function getLastFewBlocks(hexString) {
@@ -92,14 +87,9 @@ export default function App() {
       }),
     };
 
-    await fetch(AppConfiguration.networkURL, requestOptions)
-      .then((response) => response.json())
-      .then((returnedJSON) => {
-        // console.log(returnedJSON);
+    const json = await APIHandler.fetchData(requestOptions);
 
-        blockData = returnedJSON;
-        // console.log("from blocks arr", blockData["result"]["hash"]);
-      });
+    blockData = json;
 
     if (blockData["result"] != null) {
       return blockData;
