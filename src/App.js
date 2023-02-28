@@ -39,7 +39,10 @@ export default function App() {
         id: 1,
       }),
     };
-    const json = await APIHandler.fetchData(requestOptions);
+    const json = await APIHandler.fetchData(
+      requestOptions,
+      AppConfiguration.networkURL
+    );
     await getLastFewBlocks(json["result"]["number"]);
   }
 
@@ -87,7 +90,10 @@ export default function App() {
       }),
     };
 
-    const json = await APIHandler.fetchData(requestOptions);
+    const json = await APIHandler.fetchData(
+      requestOptions,
+      AppConfiguration.networkURL
+    );
 
     blockData = json;
 
